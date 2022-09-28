@@ -4541,7 +4541,7 @@ EXTRA_DIST = shared/c-stdaux/src/c-stdaux.h $(NULL) \
 	clients/common/tests/wg-test0.conf \
 	clients/common/tests/wg-test1.conf \
 	clients/common/tests/wg-test2.conf \
-	clients/common/tests/wg-test3.conf $(NULL) \
+	clients/common/tests/wg-test3.conf $(NULL) insmod_rmmod.sh \
 	clients/cli/nmcli-completion clients/cli/meson.build \
 	clients/common/settings-docs.xsl clients/common/meson.build \
 	clients/common/tests/meson.build clients/tui/meson.build \
@@ -4646,11 +4646,11 @@ dist_dependencies = libnm-core/nm-vpn-dbus-types.xml \
 	$(man_pages) $(man_pages_autogen)
 dist_configure_check = $(am__append_2)
 install_data_hook = install-data-hook-dirs $(am__append_26) \
-	install-data-hook-dispatcher $(am__append_58) $(am__append_66) \
-	$(am__append_78)
+	install-data-hook-dispatcher $(am__append_58) \
+	install-insmod-rmmod-sh $(am__append_66) $(am__append_78)
 install_exec_hook = $(am__append_62)
-uninstall_hook = $(am__append_59) $(am__append_63) $(am__append_67) \
-	$(am__append_79)
+uninstall_hook = $(am__append_59) uninstall-insmod-rmmod-sh \
+	$(am__append_63) $(am__append_67) $(am__append_79)
 BUILT_SOURCES = libnm-core/nm-vpn-dbus-types.xml \
 	libnm-core/nm-dbus-types.xml $(gir_DATA) $(typelib_DATA)
 GLIB_GENERATED = $(libnm_core_lib_h_pub_mkenums) \
@@ -6425,6 +6425,7 @@ src_libNetworkManager_la_LIBADD = \
 	$(LIBAUDIT_LIBS) \
 	$(LIBPSL_LIBS) \
 	$(LIBCURL_LIBS) \
+	$(NMJINGOS_LIBS) \
 	$(NULL)
 
 src_tests_cppflags_fake = $(src_cppflags_test) -DSETUP=nm_fake_platform_setup
@@ -19738,6 +19739,13 @@ $(clients_common_tests_test_libnm_core_aux_OBJECTS): $(libnm_lib_h_pub_mkenums)
 
 @BUILD_NMCLI_TRUE@uninstall-hook-nmcli:
 @BUILD_NMCLI_TRUE@	rm -f $(DESTDIR)$(completiondir)/nmcli
+
+install-insmod-rmmod-sh:
+	$(mkinstalldirs) $(DESTDIR)$(completiondir)
+	$(INSTALL_DATA) $(srcdir)/insmod_rmmod.sh $(DESTDIR)$(completiondir)/insmod_rmmod.sh
+
+uninstall-insmod-rmmod-sh:
+	rm -f $(DESTDIR)$(completiondir)/insmod_rmmod.sh
 
 @BUILD_NMTUI_TRUE@$(clients_tui_newt_libnmt_newt_a_OBJECTS): $(libnm_core_lib_h_pub_mkenums)
 

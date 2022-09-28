@@ -8,7 +8,7 @@
 
 #include "nm-device-wifi.h"
 //jingOS add start
-#include <nmjingos/js_listen_power.h>
+//#include <nmjingos/js_listen_power.h>
 #include <string.h>
 //jingOS add end
 
@@ -115,7 +115,7 @@ typedef struct {
 	NMSettingWirelessWakeOnWLan wowlan_restore;
 
 	//jingOS add start
-	JSLISTENPOWER *listen_handler;
+	//JSLISTENPOWER *listen_handler;
 	//jingOS add end
 
 	NMDeviceWifiP2P  *p2p_device;
@@ -3306,12 +3306,12 @@ nm_device_wifi_init (NMDeviceWifi *self)
 }
 
 //jingOS add start
-static void js_set_powersave(void* wifi_self, gint32 enbale) {
+/*static void js_set_powersave(void* wifi_self, gint32 enbale) {
 	NMDeviceWifi *self = (NMDeviceWifi*)wifi_self;
 	nm_platform_wifi_set_powersave (nm_device_get_platform (NM_DEVICE(self)),
 									nm_device_get_ifindex (NM_DEVICE(self)),
 									enbale);
-}
+}*/
 //jingOS add end
 
 static void
@@ -3321,7 +3321,7 @@ constructed (GObject *object)
 	NMDeviceWifiPrivate *priv = NM_DEVICE_WIFI_GET_PRIVATE (self);
 
 	//jingOS add start
-	if (!priv->listen_handler) {
+	/*if (!priv->listen_handler) {
 		priv->listen_handler = (JSLISTENPOWER*)malloc(sizeof(JSLISTENPOWER));
 		memset((void*)priv->listen_handler, 0, sizeof(JSLISTENPOWER));
 		priv->listen_handler->dev_wifi_self = self;
@@ -3333,7 +3333,7 @@ constructed (GObject *object)
 		priv->listen_handler->interface = _nm_device_get_iface(NM_DEVICE(self));
 
 		register_listen_power(priv->listen_handler);
-	}
+	}*/
 	//jingOS add end
 	G_OBJECT_CLASS (nm_device_wifi_parent_class)->constructed (object);
 
@@ -3394,11 +3394,11 @@ finalize (GObject *object)
 
 	G_OBJECT_CLASS (nm_device_wifi_parent_class)->finalize (object);
 	//jingOS add start
-	if (priv->listen_handler) {
+	/*if (priv->listen_handler) {
 		release_resource(priv->listen_handler);
 		free(priv->listen_handler);
 		priv->listen_handler = NULL;
-	}
+	}*/
 	//jingOS add end
 }
 

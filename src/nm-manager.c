@@ -51,7 +51,7 @@
 #include "NetworkManagerUtils.h"
 
 //jingOS add start
-#include <nmjingos/js_wifibt_reset.h>
+//#include <nmjingos/js_wifibt_reset.h>
 #include <string.h>
 //jingOS add end
 
@@ -213,7 +213,7 @@ typedef struct {
 	bool net_enabled:1;
 
 	//jingOS add start
-	WCNDRESET *reset_handler;
+	//WCNDRESET *reset_handler;
 	//jingOS add end
 
 	unsigned connectivity_check_enabled_last:2;
@@ -7589,10 +7589,10 @@ constructed (GObject *object)
 }
 
 //jingOS add start
-gboolean js_get_wifistate(void* devself) {
+/* gboolean js_get_wifistate(void* devself) {
 	NMManager *self = (NMManager*)devself;
 	return radio_enabled_for_type (self, RFKILL_TYPE_WLAN, TRUE);
-}
+} */
 //jingOS add end
 
 static void
@@ -7691,6 +7691,7 @@ nm_manager_init (NMManager *self)
 	priv->sleep_devices = g_hash_table_new (nm_direct_hash, NULL);
 
 	//jingOS add start
+	/*
 	if (!priv->reset_handler) {
 		priv->reset_handler = (WCNDRESET*)malloc(sizeof(WCNDRESET));
 		memset((void*)priv->reset_handler, 0, sizeof(WCNDRESET));
@@ -7700,6 +7701,7 @@ nm_manager_init (NMManager *self)
 		priv->reset_handler->get_wifistate = js_get_wifistate;
 		register_wcnd_reset(priv->reset_handler);
 	}
+	*/
 	//jingOS add end
 }
 
@@ -8015,11 +8017,13 @@ finalize (GObject *object)
 
 	g_object_unref (priv->platform);
 	//jingOS add start
-	if (priv->reset_handler) {
+	/*
+	 if (priv->reset_handler) {
 		wcnd_reset_release(priv->reset_handler);
 		free(priv->reset_handler);
 		priv->reset_handler = NULL;
 	}
+	*/
 	//jingOS add end
 }
 

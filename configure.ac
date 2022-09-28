@@ -555,7 +555,7 @@ AC_SUBST(NM_CONFIG_DEFAULT_LOGGING_AUDIT_TEXT)
 PKG_CHECK_MODULES(UUID, uuid)
 
 # libnm-jingos library
-PKG_CHECK_MODULES(NMJINGOS, libnm-jingos)
+# PKG_CHECK_MODULES(NMJINGOS, libnm-jingos)
 
 # Teamd control checks
 
